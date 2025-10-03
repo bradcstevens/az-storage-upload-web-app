@@ -1,0 +1,27 @@
+# Azure Developer CLI (azd) configuration
+name: video-upload-app
+metadata:
+  template: video-upload-app@0.0.1-beta
+services:
+  web:
+    project: .
+    language: python
+    host: appservice
+    hooks:
+      prepackage:
+        windows:
+          shell: pwsh
+          run: |
+            echo "Preparing deployment package..."
+            if (Test-Path "package") { Remove-Item -Recurse -Force package }
+            New-Item -ItemType Directory -Path package | Out-Null
+            Copy-Item -Path @('app.py', 'requirements.txt', 'startup.txt', 'templates', 'static') -Destination package -Recurse
+            echo "Package prepared successfully"
+        posix:
+          shell: sh
+          run: |
+            echo "Preparing deployment package..."
+            rm -rf package
+            mkdir -p package
+            cp -r app.py requirements.txt startup.txt templates static package/
+            echo "Package prepared successfully"

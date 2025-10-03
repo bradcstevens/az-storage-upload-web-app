@@ -1,0 +1,23 @@
+{
+  "resourcesResourceGroups": "rg-",
+  "storageStorageAccounts": "st",
+  "webSitesAppService": "app-",
+  "webServerFarms": "plan-",
+  "insightsComponents": "appi-",
+  "keyVaultVaults": "kv-",
+  "sqlServers": "sql-",
+  "sqlServersDatabases": "sqldb-",
+  "cosmosDBDatabaseAccounts": "cosmos-",
+  "managedIdentityUserAssignedIdentities": "id-",
+  "virtualNetworksVirtualNetworks": "vnet-",
+  "networkSecurityGroups": "nsg-",
+  "publicIPAddresses": "pip-",
+  "loadBalancers": "lb-",
+  "virtualMachines": "vm-",
+  "networkInterfaces": "nic-",
+  "containerRegistryRegistries": "cr",
+  "cognitiveServicesAccounts": "cog-",
+  "searchSearchServices": "srch-",
+  "eventHubNamespaces": "evhns-",
+  "serviceBusNamespaces": "sbns-"
+}

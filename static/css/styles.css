@@ -1,0 +1,594 @@
+/* ===================================
+   Azure Video Upload - Custom Styles
+   Design System Implementation
+   =================================== */
+
+/* ===== CSS Custom Properties (Design Tokens) ===== */
+:root {
+    /* Primary Colors - Azure Brand */
+    --primary-50: #e3f2fd;
+    --primary-100: #bbdefb;
+    --primary-500: #0078d4;
+    --primary-600: #106ebe;
+    --primary-700: #005a9e;
+    --primary-900: #003e7e;
+    
+    /* Semantic Colors */
+    --success-light: #d4edda;
+    --success-main: #28a745;
+    --success-dark: #1e7e34;
+    
+    --warning-light: #fff3cd;
+    --warning-main: #ffc107;
+    --warning-dark: #d39e00;
+    
+    --error-light: #f8d7da;
+    --error-main: #dc3545;
+    --error-dark: #bd2130;
+    
+    --info-light: #d1ecf1;
+    --info-main: #17a2b8;
+    --info-dark: #138496;
+    
+    /* Neutral Colors */
+    --neutral-50: #f8f9fa;
+    --neutral-100: #e9ecef;
+    --neutral-200: #dee2e6;
+    --neutral-300: #ced4da;
+    --neutral-500: #6c757d;
+    --neutral-700: #495057;
+    --neutral-900: #212529;
+    
+    /* Background Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-upload-zone: #f0f7ff;
+    --bg-upload-zone-active: #d6eaff;
+    
+    /* Border Colors */
+    --border-light: #dee2e6;
+    --border-medium: #ced4da;
+    --border-primary: #0078d4;
+    --border-dashed: #adb5bd;
+    
+    /* Spacing */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-full: 9999px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-focus: 0 0 0 3px rgba(0, 120, 212, 0.25);
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ===== Global Styles ===== */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--bg-secondary);
+    color: var(--neutral-900);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Skip Link for Accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-500);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    z-index: 1000;
+}
+
+.skip-link:focus {
+    top: 10px;
+    left: 10px;
+}
+
+/* ===== Header Styles ===== */
+.app-header {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ===== Upload Zone (Organism) ===== */
+.upload-zone {
+    background: var(--bg-upload-zone);
+    border: 2px dashed var(--border-dashed);
+    border-radius: var(--radius-xl);
+    padding: var(--space-12) var(--space-6);
+    text-align: center;
+    transition: all var(--transition-base);
+    cursor: pointer;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-zone:hover,
+.upload-zone:focus {
+    background: var(--bg-upload-zone-active);
+    border-color: var(--border-primary);
+    border-style: solid;
+    outline: none;
+    box-shadow: var(--shadow-md);
+}
+
+.upload-zone.drag-over {
+    background: var(--bg-upload-zone-active);
+    border-color: var(--border-primary);
+    border-style: solid;
+    box-shadow: var(--shadow-lg);
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    font-size: 4rem;
+    color: var(--primary-500);
+    margin-bottom: var(--space-4);
+}
+
+.upload-headline {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--neutral-700);
+    margin-bottom: var(--space-3);
+}
+
+.upload-subtitle {
+    font-size: 1rem;
+    color: var(--neutral-500);
+    margin: var(--space-3) 0;
+}
+
+.upload-instructions {
+    margin-top: var(--space-4);
+    color: var(--neutral-500);
+}
+
+/* ===== File Input Group (Molecule) ===== */
+.file-input {
+    display: none;
+}
+
+.btn-upload {
+    min-height: 44px;
+    min-width: 140px;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.btn-upload:focus {
+    box-shadow: var(--shadow-focus);
+}
+
+/* ===== Progress Section (Organism) ===== */
+.progress-section .card {
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+/* Progress Item (Molecule) */
+.progress-item {
+    padding: var(--space-3);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+}
+
+.progress-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-2);
+}
+
+.progress-item-filename {
+    font-weight: 500;
+    color: var(--neutral-900);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.progress-item-percentage {
+    font-weight: 600;
+    color: var(--primary-600);
+}
+
+/* Progress Bar (Atom) */
+.progress {
+    height: 8px;
+    border-radius: var(--radius-full);
+    background-color: var(--neutral-200);
+}
+
+.progress-bar {
+    transition: width var(--transition-base);
+    border-radius: var(--radius-full);
+}
+
+/* ===== Videos List (Organism) ===== */
+.videos-section .card {
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.videos-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: var(--space-12) var(--space-4);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    color: var(--neutral-300);
+    margin-bottom: var(--space-4);
+}
+
+.empty-text {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--neutral-500);
+    margin-bottom: var(--space-2);
+}
+
+.empty-subtext {
+    font-size: 0.875rem;
+}
+
+/* Video List Item (Molecule) */
+.video-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-3);
+    background: var(--bg-primary);
+    transition: all var(--transition-fast);
+    min-height: 60px;
+}
+
+.video-item:hover {
+    background: var(--neutral-50);
+    box-shadow: var(--shadow-sm);
+}
+
+.video-item-icon {
+    font-size: 1.5rem;
+    margin-right: var(--space-3);
+    color: var(--primary-500);
+}
+
+.video-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.video-item-name {
+    font-weight: 500;
+    color: var(--neutral-900);
+    margin-bottom: var(--space-1);
+    word-break: break-word;
+}
+
+.video-item-meta {
+    font-size: 0.875rem;
+    color: var(--neutral-500);
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
+.video-item-status {
+    margin-left: var(--space-3);
+}
+
+/* Status Badge (Atom) */
+.badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-md);
+}
+
+.badge-success {
+    background-color: var(--success-light);
+    color: var(--success-dark);
+}
+
+.badge-error {
+    background-color: var(--error-light);
+    color: var(--error-dark);
+}
+
+.badge-processing {
+    background-color: var(--warning-light);
+    color: var(--warning-dark);
+}
+
+/* ===== Notification Component (Molecule) ===== */
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    max-width: 400px;
+}
+
+.notification {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--space-4);
+    margin-bottom: var(--space-3);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    animation: slideIn 0.3s ease;
+    background: white;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notification.notification-exit {
+    animation: slideOut 0.3s ease forwards;
+}
+
+@keyframes slideOut {
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+.notification-icon {
+    font-size: 1.5rem;
+    margin-right: var(--space-3);
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    margin-bottom: var(--space-1);
+}
+
+.notification-message {
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: var(--space-3);
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: inherit;
+    opacity: 0.5;
+    transition: opacity var(--transition-fast);
+}
+
+.notification-close:hover {
+    opacity: 1;
+}
+
+.notification-success {
+    border-left: 4px solid var(--success-main);
+}
+
+.notification-success .notification-icon {
+    color: var(--success-main);
+}
+
+.notification-error {
+    border-left: 4px solid var(--error-main);
+}
+
+.notification-error .notification-icon {
+    color: var(--error-main);
+}
+
+.notification-info {
+    border-left: 4px solid var(--info-main);
+}
+
+.notification-info .notification-icon {
+    color: var(--info-main);
+}
+
+/* ===== Footer ===== */
+.app-footer {
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-light);
+    margin-top: auto;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 767px) {
+    /* Mobile adjustments */
+    .upload-zone {
+        min-height: 250px;
+        padding: var(--space-8) var(--space-4);
+    }
+    
+    .upload-icon {
+        font-size: 3rem;
+    }
+    
+    .upload-headline {
+        font-size: 1.25rem;
+    }
+    
+    .btn-upload {
+        width: 100%;
+    }
+    
+    .video-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .video-item-icon {
+        margin-bottom: var(--space-2);
+    }
+    
+    .video-item-status {
+        margin-left: 0;
+        margin-top: var(--space-2);
+    }
+    
+    .notification-container {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .progress {
+        height: 12px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet adjustments */
+    .upload-zone {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    /* Desktop adjustments */
+    .upload-zone {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .container {
+        max-width: 1200px;
+    }
+}
+
+/* ===== Accessibility - Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    /* Keep essential progress feedback */
+    .progress-bar {
+        transition: width 0.3s ease;
+    }
+}
+
+/* ===== Focus Indicators ===== */
+button:focus,
+a:focus,
+input:focus,
+[tabindex]:focus {
+    outline: 3px solid var(--primary-500);
+    outline-offset: 2px;
+}
+
+/* ===== Custom Scrollbar ===== */
+.videos-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.videos-list::-webkit-scrollbar-track {
+    background: var(--neutral-100);
+    border-radius: var(--radius-md);
+}
+
+.videos-list::-webkit-scrollbar-thumb {
+    background: var(--neutral-300);
+    border-radius: var(--radius-md);
+}
+
+.videos-list::-webkit-scrollbar-thumb:hover {
+    background: var(--neutral-500);
+}
+
+/* ===== Loading States ===== */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
