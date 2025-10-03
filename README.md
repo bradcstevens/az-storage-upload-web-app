@@ -11,9 +11,11 @@ A production-ready Flask web application for uploading videos to Azure Blob Stor
 - **🔐 Managed Identity**: Passwordless authentication to Azure Storage using system-assigned managed identity
 - **👤 Optional Authentication**: Microsoft Entra ID (Azure AD) integration for user authentication
 - **🏗️ Infrastructure as Code**: Complete Azure Bicep templates for reproducible deployments
+- **🤖 CI/CD Pipeline**: Automated deployment, testing, and cleanup with GitHub Actions
 - **📊 Health Monitoring**: Built-in health check endpoint for monitoring
 - **🎨 Modern UI**: Responsive Bootstrap 5 interface with drag-and-drop support
 - **📱 Mobile Friendly**: Works seamlessly on desktop, tablet, and mobile devices
+- **🧪 E2E Testing**: Comprehensive Playwright test suite for UI validation
 
 ## 🚀 Quick Start
 
@@ -43,6 +45,7 @@ That's it! The deployment takes ~5-8 minutes and creates all necessary Azure res
 ## 📚 Documentation
 
 - **[Deployment Checklist](docs/DEPLOYMENT-CHECKLIST.md)** - Step-by-step deployment guide with verification steps
+- **[CI/CD Setup Guide](docs/CI-CD-SETUP.md)** - GitHub Actions pipeline configuration and troubleshooting
 - **[Authentication Guide](AUTHENTICATION-GUIDE.md)** - How to enable Microsoft Entra ID authentication
 - **[Storage Access Guide](docs/STORAGE-ACCESS-GUIDE.md)** - Access and manage blob storage with Storage Explorer
 - **[Infrastructure README](infra/README.md)** - Detailed Bicep module documentation

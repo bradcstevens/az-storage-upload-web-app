@@ -1,0 +1,275 @@
+name: CI/CD - Deploy, Test, and Cleanup
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'memory-bank/**'
+      - '.github/instructions/**'
+      - '.github/chatmodes/**'
+  workflow_dispatch: # Allow manual triggering
+
+env:
+  AZURE_ENV_NAME: ci-test-${{ github.run_number }}
+  AZURE_LOCATION: westus3
+
+jobs:
+  deploy-test-cleanup:
+    name: Deploy, Test, and Cleanup
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # Required for OIDC authentication
+    
+    steps:
+      # ============================================
+      # SETUP
+      # ============================================
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Azure Developer CLI
+        run: |
+          curl -fsSL https://aka.ms/install-azd.sh | bash
+          azd version
+
+      - name: Install Playwright
+        run: |
+          pip install playwright pytest-playwright
+          playwright install chromium
+          playwright install-deps chromium
+
+      # ============================================
+      # AZURE AUTHENTICATION
+      # ============================================
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Azure Developer CLI Login
+        run: |
+          azd auth login --client-id "${{ secrets.AZURE_CLIENT_ID }}" \
+                         --client-secret "${{ secrets.AZURE_CLIENT_SECRET }}" \
+                         --tenant-id "${{ secrets.AZURE_TENANT_ID }}"
+
+      # ============================================
+      # DEPLOYMENT
+      # ============================================
+      - name: Initialize azd environment
+        run: |
+          azd init --environment ${{ env.AZURE_ENV_NAME }} --location ${{ env.AZURE_LOCATION }} --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azd env set AZURE_LOCATION ${{ env.AZURE_LOCATION }}
+
+      - name: Provision and Deploy Infrastructure
+        id: deploy
+        run: |
+          echo "Starting deployment..."
+          azd up --no-prompt
+          
+          # Capture outputs
+          APP_URL=$(azd env get-values | grep AZURE_APP_SERVICE_URL | cut -d'=' -f2 | tr -d '"')
+          STORAGE_ACCOUNT=$(azd env get-values | grep AZURE_STORAGE_ACCOUNT_NAME | cut -d'=' -f2 | tr -d '"')
+          RESOURCE_GROUP=$(azd env get-values | grep AZURE_RESOURCE_GROUP | cut -d'=' -f2 | tr -d '"')
+          
+          echo "app_url=$APP_URL" >> $GITHUB_OUTPUT
+          echo "storage_account=$STORAGE_ACCOUNT" >> $GITHUB_OUTPUT
+          echo "resource_group=$RESOURCE_GROUP" >> $GITHUB_OUTPUT
+          
+          echo "✅ Deployment complete!"
+          echo "🌐 App URL: $APP_URL"
+          echo "📦 Storage: $STORAGE_ACCOUNT"
+          echo "📂 Resource Group: $RESOURCE_GROUP"
+
+      - name: Wait for App Service to be ready
+        run: |
+          APP_URL="${{ steps.deploy.outputs.app_url }}"
+          echo "Waiting for app to be responsive at $APP_URL..."
+          
+          max_attempts=30
+          attempt=0
+          
+          while [ $attempt -lt $max_attempts ]; do
+            if curl -sf "$APP_URL/health" > /dev/null 2>&1; then
+              echo "✅ App is ready!"
+              curl -s "$APP_URL/health" | jq '.'
+              break
+            fi
+            
+            attempt=$((attempt + 1))
+            echo "Attempt $attempt/$max_attempts - waiting 10 seconds..."
+            sleep 10
+          done
+          
+          if [ $attempt -eq $max_attempts ]; then
+            echo "❌ App failed to become ready after $max_attempts attempts"
+            exit 1
+          fi
+
+      # ============================================
+      # TESTING
+      # ============================================
+      - name: Run Playwright Tests
+        id: test
+        env:
+          APP_URL: ${{ steps.deploy.outputs.app_url }}
+          STORAGE_ACCOUNT: ${{ steps.deploy.outputs.storage_account }}
+          RESOURCE_GROUP: ${{ steps.deploy.outputs.resource_group }}
+        run: |
+          echo "🧪 Running Playwright tests against $APP_URL"
+          pytest tests/e2e/ -v --headed=false --video=retain-on-failure --screenshot=only-on-failure
+        continue-on-error: true # Don't fail pipeline, but capture result
+
+      - name: Upload Test Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+
+      - name: Verify Storage Upload
+        if: steps.test.outcome == 'success'
+        run: |
+          echo "📦 Verifying blobs were uploaded to storage..."
+          
+          BLOB_COUNT=$(az storage blob list \
+            --account-name ${{ steps.deploy.outputs.storage_account }} \
+            --container-name videos \
+            --auth-mode login \
+            --query "length(@)" \
+            --output tsv)
+          
+          echo "Found $BLOB_COUNT blob(s) in storage"
+          
+          if [ "$BLOB_COUNT" -gt 0 ]; then
+            echo "✅ Upload verification successful!"
+            az storage blob list \
+              --account-name ${{ steps.deploy.outputs.storage_account }} \
+              --container-name videos \
+              --auth-mode login \
+              --query "[].{Name:name, Size:properties.contentLength, Created:properties.creationTime}" \
+              --output table
+          else
+            echo "⚠️ Warning: No blobs found in storage"
+          fi
+
+      # ============================================
+      # CLEANUP (ALWAYS RUNS)
+      # ============================================
+      - name: Cleanup - Delete Azure Resources
+        if: always()
+        run: |
+          echo "🧹 Starting cleanup of Azure resources..."
+          
+          # Get resource group name
+          RG_NAME="${{ steps.deploy.outputs.resource_group }}"
+          
+          if [ -z "$RG_NAME" ]; then
+            echo "⚠️ Resource group name not found, attempting to find by environment name..."
+            RG_NAME=$(az group list --query "[?tags.\"azd-env-name\"=='${{ env.AZURE_ENV_NAME }}'].name" -o tsv)
+          fi
+          
+          if [ -n "$RG_NAME" ]; then
+            echo "Found resource group: $RG_NAME"
+            
+            # Delete resource group
+            echo "Deleting resource group: $RG_NAME"
+            az group delete --name "$RG_NAME" --yes --no-wait
+            
+            echo "✅ Resource group deletion initiated (async)"
+          else
+            echo "⚠️ No resource group found to delete"
+          fi
+          
+          # Clean up azd environment
+          echo "Cleaning up azd environment..."
+          azd down --force --purge --no-prompt || true
+          
+          echo "✅ Cleanup complete!"
+
+      - name: Verify Cleanup
+        if: always()
+        run: |
+          echo "🔍 Verifying all resources are deleted..."
+          
+          RG_NAME="${{ steps.deploy.outputs.resource_group }}"
+          
+          if [ -n "$RG_NAME" ]; then
+            # Wait a bit for deletion to propagate
+            sleep 10
+            
+            # Check if resource group still exists
+            if az group show --name "$RG_NAME" > /dev/null 2>&1; then
+              echo "⚠️ Resource group still exists (deletion in progress)"
+              echo "Status: Being deleted (async operation)"
+            else
+              echo "✅ Resource group confirmed deleted"
+            fi
+          fi
+          
+          # List any remaining resources from this environment
+          REMAINING=$(az resource list --tag "azd-env-name=${{ env.AZURE_ENV_NAME }}" --query "length(@)" -o tsv 2>/dev/null || echo "0")
+          
+          if [ "$REMAINING" -gt 0 ]; then
+            echo "⚠️ Warning: Found $REMAINING resources still tagged with environment name"
+            az resource list --tag "azd-env-name=${{ env.AZURE_ENV_NAME }}" --output table
+          else
+            echo "✅ No tagged resources remaining"
+          fi
+
+      # ============================================
+      # SUMMARY
+      # ============================================
+      - name: Pipeline Summary
+        if: always()
+        run: |
+          echo "## 🎯 CI/CD Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment**: \`${{ env.AZURE_ENV_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Location**: \`${{ env.AZURE_LOCATION }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.deploy.outcome }}" == "success" ]; then
+            echo "✅ **Deployment**: Success" >> $GITHUB_STEP_SUMMARY
+            echo "- App URL: ${{ steps.deploy.outputs.app_url }}" >> $GITHUB_STEP_SUMMARY
+            echo "- Storage: ${{ steps.deploy.outputs.storage_account }}" >> $GITHUB_STEP_SUMMARY
+            echo "- Resource Group: ${{ steps.deploy.outputs.resource_group }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Deployment**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.test.outcome }}" == "success" ]; then
+            echo "✅ **Tests**: Passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Tests**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Cleanup**: Completed (resources deleted)" >> $GITHUB_STEP_SUMMARY
+          
+          # Overall status
+          if [ "${{ steps.deploy.outcome }}" == "success" ] && [ "${{ steps.test.outcome }}" == "success" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "🎉 **Pipeline Status**: SUCCESS" >> $GITHUB_STEP_SUMMARY
+            exit 0
+          else
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ **Pipeline Status**: FAILED" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi

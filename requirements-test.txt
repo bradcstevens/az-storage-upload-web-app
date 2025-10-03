@@ -1,0 +1,14 @@
+# Test Dependencies
+# Install with: pip install -r requirements-test.txt
+
+# Playwright for E2E testing
+playwright==1.40.0
+pytest-playwright==0.4.3
+
+# Pytest framework
+pytest==7.4.3
+pytest-timeout==2.2.0
+
+# Additional testing utilities
+pytest-cov==4.1.0
+pytest-xdist==3.5.0  # For parallel test execution
