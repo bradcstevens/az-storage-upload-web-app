@@ -88,6 +88,12 @@ def health_check():
     })
 
 
+@app.route('/health', methods=['GET'])
+def health_check_root():
+    """Root health check endpoint (alias for /api/health)"""
+    return health_check()
+
+
 @app.route('/api/upload', methods=['POST'])
 def upload_video():
     """Upload video file to Azure Blob Storage"""

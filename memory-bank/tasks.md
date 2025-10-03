@@ -1,12 +1,28 @@
 # Memory Bank: Tasks
 
 ## Current Task
-Build Azure Web App MVP for Video Upload to Azure Storage
+Fix CI/CD Pipeline Health Check Failure
+
+## Previous Task (Completed)
+Build Azure Web App MVP for Video Upload to Azure Storage ✅
 
 ## Complexity Level
-Level 3: Intermediate Feature
+Level 2: Bug Fix
 
 ## Status
+- [x] Task definition
+- [x] Complexity determination
+- [x] Analysis complete (analytics document created)
+- [x] Root cause identified: Health endpoint path mismatch
+- [x] Solution implemented
+  - [x] Updated workflow to check `/api/health` instead of `/health`
+  - [x] Added 30-second startup delay before health checks
+  - [x] Added diagnostic output on health check failure
+  - [x] Added root `/health` endpoint alias for compatibility
+- [ ] Testing pending (push to GitHub)
+- [ ] Validation pending (pipeline run)
+
+## Previous Task Status
 - [x] Task definition
 - [x] Complexity determination
 - [x] Planning phase complete
