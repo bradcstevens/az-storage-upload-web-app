@@ -92,11 +92,29 @@ jobs:
           echo "📦 Storage: $STORAGE_ACCOUNT"
           echo "📂 Resource Group: $RESOURCE_GROUP"
 
+      - name: Stream App Service Logs
+        id: logs
+        run: |
+          APP_NAME=$(echo "${{ steps.deploy.outputs.app_url }}" | sed 's/https:\/\///' | sed 's/.azurewebsites.net//')
+          RESOURCE_GROUP="${{ steps.deploy.outputs.resource_group }}"
+          
+          echo "📋 Streaming logs from $APP_NAME..."
+          
+          # Stream logs in background for 45 seconds to capture startup
+          timeout 45 az webapp log tail \
+            --name "$APP_NAME" \
+            --resource-group "$RESOURCE_GROUP" \
+            2>&1 | tee app-service-logs.txt || true
+          
+          echo ""
+          echo "✅ Log capture complete (45 seconds)"
+        continue-on-error: true
+
       - name: Wait for App Service to be ready
         run: |
           APP_URL="${{ steps.deploy.outputs.app_url }}"
-          echo "⏳ Waiting 30 seconds for app startup..."
-          sleep 30
+          echo "⏳ Waiting for app health check..."
+          sleep 10
           
           echo "Waiting for app to be responsive at $APP_URL..."
           
@@ -138,7 +156,7 @@ jobs:
           RESOURCE_GROUP: ${{ steps.deploy.outputs.resource_group }}
         run: |
           echo "🧪 Running Playwright tests against $APP_URL"
-          pytest tests/e2e/ -v --headed=false --video=retain-on-failure --screenshot=only-on-failure
+          pytest tests/e2e/ -v --browser chromium --video=retain-on-failure --screenshot=only-on-failure
         continue-on-error: true # Don't fail pipeline, but capture result
 
       - name: Upload Test Artifacts
@@ -149,6 +167,15 @@ jobs:
           path: |
             test-results/
             playwright-report/
+          retention-days: 7
+
+      - name: Upload Deployment Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-logs
+          path: |
+            app-service-logs.txt
           retention-days: 7
 
       - name: Verify Storage Upload
