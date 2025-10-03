@@ -1,0 +1,16 @@
+﻿2025-10-03T20:03:05.0028939Z ##[group]Run azd auth login --client-id "***" \
+2025-10-03T20:03:05.0029733Z [36;1mazd auth login --client-id "***" \[0m
+2025-10-03T20:03:05.0030544Z [36;1m               --client-secret "***" \[0m
+2025-10-03T20:03:05.0031164Z [36;1m               --tenant-id "***"[0m
+2025-10-03T20:03:05.0077540Z shell: /usr/bin/bash -e {0}
+2025-10-03T20:03:05.0077977Z env:
+2025-10-03T20:03:05.0078308Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T20:03:05.0078725Z   AZURE_LOCATION: westus3
+2025-10-03T20:03:05.0079238Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.0080005Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib/pkgconfig
+2025-10-03T20:03:05.0080775Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.0081456Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.0082126Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.0082803Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib
+2025-10-03T20:03:05.0083391Z ##[endgroup]
+2025-10-03T20:03:05.5894117Z Logged in to Azure as (***)

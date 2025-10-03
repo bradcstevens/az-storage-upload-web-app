@@ -1,0 +1,19 @@
+﻿2025-10-03T19:58:54.9350364Z ##[group]Run actions/setup-python@v5
+2025-10-03T19:58:54.9350732Z with:
+2025-10-03T19:58:54.9350976Z   python-version: 3.11
+2025-10-03T19:58:54.9351239Z   cache: pip
+2025-10-03T19:58:54.9351475Z   check-latest: false
+2025-10-03T19:58:54.9351873Z   token: ***
+2025-10-03T19:58:54.9352122Z   update-environment: true
+2025-10-03T19:58:54.9352413Z   allow-prereleases: false
+2025-10-03T19:58:54.9352899Z   freethreaded: false
+2025-10-03T19:58:54.9353152Z env:
+2025-10-03T19:58:54.9353377Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T19:58:54.9353654Z   AZURE_LOCATION: westus3
+2025-10-03T19:58:54.9353915Z ##[endgroup]
+2025-10-03T19:58:55.1092534Z ##[group]Installed versions
+2025-10-03T19:58:55.3372118Z Successfully set up CPython (3.11.13)
+2025-10-03T19:58:55.3372818Z ##[endgroup]
+2025-10-03T19:58:55.4159684Z [command]/opt/hostedtoolcache/Python/3.11.13/x64/bin/pip cache dir
+2025-10-03T19:59:01.8925128Z /home/runner/.cache/pip
+2025-10-03T19:59:02.1334046Z pip cache is not found

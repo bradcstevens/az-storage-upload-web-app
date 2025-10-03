@@ -11,10 +11,11 @@ applyTo: "**/memory-bank-paths.instructions.md"
 * **Active Context File:** `memory-bank/activeContext.md`
 * **Progress File:** `memory-bank/progress.md`
 * **Project Brief File:** `memory-bank/projectbrief.md`
-* **Product Context File:** `memory-bank/productContext.md`
+* **Product Context File:** `memory-bank/productContext.md`R
 * **System Patterns File:** `memory-bank/systemPatterns.md`
 * **Tech Context File:** `memory-bank/techContext.md`
 * **Style Guide File:** `memory-bank/style-guide.md`
+* **Analyze Phase Docs:** `memory-bank/analyze/analyze-[feature_name].md`
 * **Creative Phase Docs:** `memory-bank/creative/creative-[feature_name].md`
 * **Reflection Docs:** `memory-bank/reflection/reflection-[task_id].md`
 * **Archive Directory:** `memory-bank/archive/archive-[task_id].md`

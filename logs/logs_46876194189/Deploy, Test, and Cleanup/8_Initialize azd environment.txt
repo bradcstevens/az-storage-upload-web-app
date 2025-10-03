@@ -1,0 +1,19 @@
+﻿2025-10-03T20:03:05.5971945Z ##[group]Run azd init --environment ci-test-2 --location westus3 --subscription ***
+2025-10-03T20:03:05.5972678Z [36;1mazd init --environment ci-test-2 --location westus3 --subscription ***[0m
+2025-10-03T20:03:05.5973084Z [36;1mazd env set AZURE_LOCATION westus3[0m
+2025-10-03T20:03:05.6005268Z shell: /usr/bin/bash -e {0}
+2025-10-03T20:03:05.6005516Z env:
+2025-10-03T20:03:05.6005922Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T20:03:05.6006171Z   AZURE_LOCATION: westus3
+2025-10-03T20:03:05.6006472Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.6006893Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib/pkgconfig
+2025-10-03T20:03:05.6007313Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.6007691Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.6008061Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.6008423Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib
+2025-10-03T20:03:05.6008771Z ##[endgroup]
+2025-10-03T20:03:05.6430916Z 
+2025-10-03T20:03:05.6431374Z Initializing an app to run on Azure (azd init)
+2025-10-03T20:03:05.6431756Z 
+2025-10-03T20:03:05.6455213Z 
+2025-10-03T20:03:05.6455575Z SUCCESS: Initialized environment ci-test-2.

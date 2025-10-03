@@ -1,0 +1,58 @@
+﻿2025-10-03T20:28:21.7557728Z ##[group]Run echo "🧹 Starting cleanup of Azure resources..."
+2025-10-03T20:28:21.7558427Z [36;1mecho "🧹 Starting cleanup of Azure resources..."[0m
+2025-10-03T20:28:21.7558853Z [36;1m[0m
+2025-10-03T20:28:21.7559195Z [36;1m# Get resource group name[0m
+2025-10-03T20:28:21.7559593Z [36;1mRG_NAME="rg-ci-test-2"[0m
+2025-10-03T20:28:21.7572427Z [36;1m[0m
+2025-10-03T20:28:21.7572769Z [36;1mif [ -z "$RG_NAME" ]; then[0m
+2025-10-03T20:28:21.7573441Z [36;1m  echo "⚠️ Resource group name not found, attempting to find by environment name..."[0m
+2025-10-03T20:28:21.7574273Z [36;1m  RG_NAME=$(az group list --query "[?tags.\"azd-env-name\"=='ci-test-2'].name" -o tsv)[0m
+2025-10-03T20:28:21.7574855Z [36;1mfi[0m
+2025-10-03T20:28:21.7575152Z [36;1m[0m
+2025-10-03T20:28:21.7575388Z [36;1mif [ -n "$RG_NAME" ]; then[0m
+2025-10-03T20:28:21.7576158Z [36;1m  echo "Found resource group: $RG_NAME"[0m
+2025-10-03T20:28:21.7576505Z [36;1m  [0m
+2025-10-03T20:28:21.7576722Z [36;1m  # Delete resource group[0m
+2025-10-03T20:28:21.7577064Z [36;1m  echo "Deleting resource group: $RG_NAME"[0m
+2025-10-03T20:28:21.7577405Z [36;1m  az group delete --name "$RG_NAME" --yes --no-wait[0m
+2025-10-03T20:28:21.7577708Z [36;1m  [0m
+2025-10-03T20:28:21.7577964Z [36;1m  echo "✅ Resource group deletion initiated (async)"[0m
+2025-10-03T20:28:21.7578276Z [36;1melse[0m
+2025-10-03T20:28:21.7578520Z [36;1m  echo "⚠️ No resource group found to delete"[0m
+2025-10-03T20:28:21.7578797Z [36;1mfi[0m
+2025-10-03T20:28:21.7578980Z [36;1m[0m
+2025-10-03T20:28:21.7579177Z [36;1m# Clean up azd environment[0m
+2025-10-03T20:28:21.7579453Z [36;1mecho "Cleaning up azd environment..."[0m
+2025-10-03T20:28:21.7579784Z [36;1mazd down --force --purge --no-prompt || true[0m
+2025-10-03T20:28:21.7580068Z [36;1m[0m
+2025-10-03T20:28:21.7580260Z [36;1mecho "✅ Cleanup complete!"[0m
+2025-10-03T20:28:21.7612542Z shell: /usr/bin/bash -e {0}
+2025-10-03T20:28:21.7612806Z env:
+2025-10-03T20:28:21.7612997Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T20:28:21.7613244Z   AZURE_LOCATION: westus3
+2025-10-03T20:28:21.7613543Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:28:21.7613973Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib/pkgconfig
+2025-10-03T20:28:21.7614380Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:28:21.7614745Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:28:21.7615109Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:28:21.7615476Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib
+2025-10-03T20:28:21.7615959Z ##[endgroup]
+2025-10-03T20:28:21.7668170Z 🧹 Starting cleanup of Azure resources...
+2025-10-03T20:28:21.7668697Z Found resource group: rg-ci-test-2
+2025-10-03T20:28:21.7669169Z Deleting resource group: rg-ci-test-2
+2025-10-03T20:28:23.6779449Z ✅ Resource group deletion initiated (async)
+2025-10-03T20:28:23.6780082Z Cleaning up azd environment...
+2025-10-03T20:28:24.2750372Z 
+2025-10-03T20:28:24.2750906Z Deleting all resources and deployed code on Azure (azd down)
+2025-10-03T20:28:24.2751688Z Local application code is not deleted when running 'azd down'.
+2025-10-03T20:28:24.2752163Z 
+2025-10-03T20:28:24.6135276Z Initialize bicep provider
+2025-10-03T20:28:29.4864949Z Discovering resources to delete...
+2025-10-03T20:28:33.0276185Z Deleting your resources can take some time.
+2025-10-03T20:28:33.0276727Z 
+2025-10-03T20:28:33.9879505Z Deleting resource group rg-ci-test-2
+2025-10-03T20:31:39.6239831Z   (✓) Done: Deleted resource group rg-ci-test-2
+2025-10-03T20:32:14.0020438Z 
+2025-10-03T20:32:14.0029778Z 
+2025-10-03T20:32:14.0030516Z SUCCESS: Your application was removed from Azure in 3 minutes 49 seconds.
+2025-10-03T20:32:14.0059883Z ✅ Cleanup complete!

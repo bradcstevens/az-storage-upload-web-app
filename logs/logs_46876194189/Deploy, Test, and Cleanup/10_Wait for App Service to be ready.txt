@@ -1,0 +1,53 @@
+﻿2025-10-03T20:27:03.6157660Z ##[group]Run APP_URL="https://app-ahnm45ogpsuuo.azurewebsites.net"
+2025-10-03T20:27:03.6158548Z [36;1mAPP_URL="https://app-ahnm45ogpsuuo.azurewebsites.net"[0m
+2025-10-03T20:27:03.6159249Z [36;1mecho "⏳ Waiting 30 seconds for app startup..."[0m
+2025-10-03T20:27:03.6159790Z [36;1msleep 30[0m
+2025-10-03T20:27:03.6160145Z [36;1m[0m
+2025-10-03T20:27:03.6160602Z [36;1mecho "Waiting for app to be responsive at $APP_URL..."[0m
+2025-10-03T20:27:03.6161151Z [36;1m[0m
+2025-10-03T20:27:03.6161486Z [36;1mmax_attempts=30[0m
+2025-10-03T20:27:03.6161882Z [36;1mattempt=0[0m
+2025-10-03T20:27:03.6162229Z [36;1m[0m
+2025-10-03T20:27:03.6162611Z [36;1mwhile [ $attempt -lt $max_attempts ]; do[0m
+2025-10-03T20:27:03.6163263Z [36;1m  if curl -sf "$APP_URL/api/health" > /dev/null 2>&1; then[0m
+2025-10-03T20:27:03.6163855Z [36;1m    echo "✅ App is ready!"[0m
+2025-10-03T20:27:03.6164351Z [36;1m    curl -s "$APP_URL/api/health" | jq '.'[0m
+2025-10-03T20:27:03.6164838Z [36;1m    break[0m
+2025-10-03T20:27:03.6165253Z [36;1m  fi[0m
+2025-10-03T20:27:03.6165575Z [36;1m  [0m
+2025-10-03T20:27:03.6166140Z [36;1m  attempt=$((attempt + 1))[0m
+2025-10-03T20:27:03.6166766Z [36;1m  echo "Attempt $attempt/$max_attempts - waiting 10 seconds..."[0m
+2025-10-03T20:27:03.6167374Z [36;1m  sleep 10[0m
+2025-10-03T20:27:03.6167743Z [36;1mdone[0m
+2025-10-03T20:27:03.6168080Z [36;1m[0m
+2025-10-03T20:27:03.6168461Z [36;1mif [ $attempt -eq $max_attempts ]; then[0m
+2025-10-03T20:27:03.6169117Z [36;1m  echo "❌ App failed to become ready after $max_attempts attempts"[0m
+2025-10-03T20:27:03.6169802Z [36;1m  echo "🔍 Attempting diagnostic check..."[0m
+2025-10-03T20:27:03.6170357Z [36;1m  curl -v "$APP_URL/api/health" || true[0m
+2025-10-03T20:27:03.6170926Z [36;1m  echo "Checking App Service status..."[0m
+2025-10-03T20:27:03.6171425Z [36;1m  az webapp show \[0m
+2025-10-03T20:27:03.6172045Z [36;1m    --name $(echo "$APP_URL" | sed 's/https:\/\///' | sed 's/.azurewebsites.net//') \[0m
+2025-10-03T20:27:03.6172752Z [36;1m    --resource-group "rg-ci-test-2" \[0m
+2025-10-03T20:27:03.6173404Z [36;1m    --query "{state: state, hostNames: hostNames}" -o table || true[0m
+2025-10-03T20:27:03.6173995Z [36;1m  exit 1[0m
+2025-10-03T20:27:03.6174318Z [36;1mfi[0m
+2025-10-03T20:27:03.6221358Z shell: /usr/bin/bash -e {0}
+2025-10-03T20:27:03.6221764Z env:
+2025-10-03T20:27:03.6222080Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T20:27:03.6222483Z   AZURE_LOCATION: westus3
+2025-10-03T20:27:03.6222978Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:27:03.6223705Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib/pkgconfig
+2025-10-03T20:27:03.6224427Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:27:03.6225330Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:27:03.6226177Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:27:03.6226798Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib
+2025-10-03T20:27:03.6227324Z ##[endgroup]
+2025-10-03T20:27:03.6287553Z ⏳ Waiting 30 seconds for app startup...
+2025-10-03T20:27:33.6308236Z Waiting for app to be responsive at https://app-ahnm45ogpsuuo.azurewebsites.net...
+2025-10-03T20:28:20.0596111Z ✅ App is ready!
+2025-10-03T20:28:20.3611023Z {
+2025-10-03T20:28:20.3611469Z   "auth_method": "managed-identity",
+2025-10-03T20:28:20.3611978Z   "azure_storage": "connected",
+2025-10-03T20:28:20.3612338Z   "status": "healthy",
+2025-10-03T20:28:20.3612716Z   "timestamp": "2025-10-03T20:28:20.308381"
+2025-10-03T20:28:20.3613146Z }

@@ -1,0 +1,72 @@
+﻿2025-10-03T19:58:54.1390946Z ##[group]Run actions/checkout@v4
+2025-10-03T19:58:54.1392390Z with:
+2025-10-03T19:58:54.1393367Z   repository: bradcstevens/az-storage-upload-web-app
+2025-10-03T19:58:54.1394852Z   token: ***
+2025-10-03T19:58:54.1395890Z   ssh-strict: true
+2025-10-03T19:58:54.1397158Z   ssh-user: git
+2025-10-03T19:58:54.1398529Z   persist-credentials: true
+2025-10-03T19:58:54.1400055Z   clean: true
+2025-10-03T19:58:54.1401047Z   sparse-checkout-cone-mode: true
+2025-10-03T19:58:54.1402068Z   fetch-depth: 1
+2025-10-03T19:58:54.1402900Z   fetch-tags: false
+2025-10-03T19:58:54.1403747Z   show-progress: true
+2025-10-03T19:58:54.1404602Z   lfs: false
+2025-10-03T19:58:54.1405372Z   submodules: false
+2025-10-03T19:58:54.1406376Z   set-safe-directory: true
+2025-10-03T19:58:54.1407664Z env:
+2025-10-03T19:58:54.1408444Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T19:58:54.1409369Z   AZURE_LOCATION: westus3
+2025-10-03T19:58:54.1410264Z ##[endgroup]
+2025-10-03T19:58:54.2483126Z Syncing repository: bradcstevens/az-storage-upload-web-app
+2025-10-03T19:58:54.2486417Z ##[group]Getting Git version info
+2025-10-03T19:58:54.2488275Z Working directory is '/home/runner/work/az-storage-upload-web-app/az-storage-upload-web-app'
+2025-10-03T19:58:54.2490608Z [command]/usr/bin/git version
+2025-10-03T19:58:54.2555951Z git version 2.51.0
+2025-10-03T19:58:54.2582291Z ##[endgroup]
+2025-10-03T19:58:54.2596606Z Temporarily overriding HOME='/home/runner/work/_temp/ca5d3017-32eb-43e0-a73d-dd44821a6117' before making global git config changes
+2025-10-03T19:58:54.2599333Z Adding repository directory to the temporary git global config as a safe directory
+2025-10-03T19:58:54.2609742Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/az-storage-upload-web-app/az-storage-upload-web-app
+2025-10-03T19:58:54.2646978Z Deleting the contents of '/home/runner/work/az-storage-upload-web-app/az-storage-upload-web-app'
+2025-10-03T19:58:54.2650132Z ##[group]Initializing the repository
+2025-10-03T19:58:54.2654381Z [command]/usr/bin/git init /home/runner/work/az-storage-upload-web-app/az-storage-upload-web-app
+2025-10-03T19:58:54.2759531Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-10-03T19:58:54.2761514Z hint: is subject to change. To configure the initial branch name to use in all
+2025-10-03T19:58:54.2763455Z hint: of your new repositories, which will suppress this warning, call:
+2025-10-03T19:58:54.2764776Z hint:
+2025-10-03T19:58:54.2766246Z hint: 	git config --global init.defaultBranch <name>
+2025-10-03T19:58:54.2767645Z hint:
+2025-10-03T19:58:54.2768763Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-10-03T19:58:54.2770533Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-10-03T19:58:54.2772144Z hint:
+2025-10-03T19:58:54.2772916Z hint: 	git branch -m <name>
+2025-10-03T19:58:54.2773811Z hint:
+2025-10-03T19:58:54.2775183Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-10-03T19:58:54.2778123Z Initialized empty Git repository in /home/runner/work/az-storage-upload-web-app/az-storage-upload-web-app/.git/
+2025-10-03T19:58:54.2781897Z [command]/usr/bin/git remote add origin https://github.com/bradcstevens/az-storage-upload-web-app
+2025-10-03T19:58:54.2819215Z ##[endgroup]
+2025-10-03T19:58:54.2820649Z ##[group]Disabling automatic garbage collection
+2025-10-03T19:58:54.2822724Z [command]/usr/bin/git config --local gc.auto 0
+2025-10-03T19:58:54.2853639Z ##[endgroup]
+2025-10-03T19:58:54.2856168Z ##[group]Setting up auth
+2025-10-03T19:58:54.2861116Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-10-03T19:58:54.2894104Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-10-03T19:58:54.3283503Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-10-03T19:58:54.3316393Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-10-03T19:58:54.3559654Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-10-03T19:58:54.3606675Z ##[endgroup]
+2025-10-03T19:58:54.3609192Z ##[group]Fetching the repository
+2025-10-03T19:58:54.3618859Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +81b7cbd91cbb6f63a84969dc59979e0d48736ae6:refs/remotes/origin/main
+2025-10-03T19:58:54.8325024Z From https://github.com/bradcstevens/az-storage-upload-web-app
+2025-10-03T19:58:54.8326879Z  * [new ref]         81b7cbd91cbb6f63a84969dc59979e0d48736ae6 -> origin/main
+2025-10-03T19:58:54.8359184Z ##[endgroup]
+2025-10-03T19:58:54.8359906Z ##[group]Determining the checkout info
+2025-10-03T19:58:54.8361508Z ##[endgroup]
+2025-10-03T19:58:54.8366660Z [command]/usr/bin/git sparse-checkout disable
+2025-10-03T19:58:54.8407572Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-10-03T19:58:54.8434772Z ##[group]Checking out the ref
+2025-10-03T19:58:54.8438503Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-10-03T19:58:54.9073377Z Switched to a new branch 'main'
+2025-10-03T19:58:54.9074376Z branch 'main' set up to track 'origin/main'.
+2025-10-03T19:58:54.9084371Z ##[endgroup]
+2025-10-03T19:58:54.9123141Z [command]/usr/bin/git log -1 --format=%H
+2025-10-03T19:58:54.9145219Z 81b7cbd91cbb6f63a84969dc59979e0d48736ae6

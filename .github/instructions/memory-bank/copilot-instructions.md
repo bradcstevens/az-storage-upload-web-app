@@ -9,13 +9,14 @@ NO process can continue without verifying Memory Bank existence
 
 ## 📁 MEMORY BANK FILE PATHS
 
-**CRITICAL:** All Memory Bank files MUST follow the canonical paths defined in `memory-bank-paths.instructions.md`.
+**CRITICAL:** All Memory Bank files MUST follow the canonical paths defined in `Core/memory-bank-paths.instructions.md`.
 
 **Before ANY Memory Bank operation:**
 1. **ALWAYS** refer to `.github/instructions/memory-bank/Core/memory-bank-paths.instructions.md` for canonical file locations
 2. **VERIFY** the memory bank directory exists at `memory-bank/` (project root)
 3. **CREATE** the directory structure if it doesn't exist:
    - `memory-bank/` (root directory)
+   - `memory-bank/analyze/` (for analyze phase documents)
    - `memory-bank/creative/` (for creative phase documents)
    - `memory-bank/reflection/` (for reflection documents)
    - `memory-bank/archive/` (for archived tasks)
@@ -29,6 +30,7 @@ NO process can continue without verifying Memory Bank existence
 - `memory-bank/systemPatterns.md` - System patterns
 - `memory-bank/techContext.md` - Technical context
 - `memory-bank/style-guide.md` - Style guidelines
+- `memory-bank/analyze/analyze-[feature_name].md` - Analyze phase docs
 - `memory-bank/creative/creative-[feature_name].md` - Creative phase docs
 - `memory-bank/reflection/reflection-[task_id].md` - Reflection docs
 - `memory-bank/archive/archive-[task_id].md` - Archived tasks

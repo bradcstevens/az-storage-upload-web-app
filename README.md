@@ -20,7 +20,7 @@ A production-ready Flask web application for uploading videos to Azure Blob Stor
 ## 🚀 Quick Start
 
 ### Prerequisites
-
+h
 - [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) (2.77.0+)
 - [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (1.19.0+)
 - Active Azure subscription

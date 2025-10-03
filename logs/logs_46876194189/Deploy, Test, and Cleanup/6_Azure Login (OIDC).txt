@@ -1,0 +1,31 @@
+﻿2025-10-03T20:02:26.1861905Z ##[group]Run azure/login@v2
+2025-10-03T20:02:26.1862182Z with:
+2025-10-03T20:02:26.1862755Z   client-id: ***
+2025-10-03T20:02:26.1863040Z   tenant-id: ***
+2025-10-03T20:02:26.1863350Z   subscription-id: ***
+2025-10-03T20:02:26.1863582Z   enable-AzPSSession: false
+2025-10-03T20:02:26.1882363Z   environment: azurecloud
+2025-10-03T20:02:26.1882686Z   allow-no-subscriptions: false
+2025-10-03T20:02:26.1882982Z   audience: api://AzureADTokenExchange
+2025-10-03T20:02:26.1883284Z   auth-type: SERVICE_PRINCIPAL
+2025-10-03T20:02:26.1883518Z env:
+2025-10-03T20:02:26.1883705Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T20:02:26.1883935Z   AZURE_LOCATION: westus3
+2025-10-03T20:02:26.1884227Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:02:26.1884638Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib/pkgconfig
+2025-10-03T20:02:26.1885038Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:02:26.1885409Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:02:26.1886041Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:02:26.1886408Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib
+2025-10-03T20:02:26.1886710Z ##[endgroup]
+2025-10-03T20:02:26.2257949Z Running Azure CLI Login.
+2025-10-03T20:03:03.2809572Z [command]/usr/bin/az cloud set -n azurecloud
+2025-10-03T20:03:03.5066545Z Done setting cloud: "azurecloud"
+2025-10-03T20:03:03.5944602Z Federated token details:
+2025-10-03T20:03:03.5945210Z  issuer - https://token.actions.githubusercontent.com
+2025-10-03T20:03:03.5946307Z  subject claim - repo:bradcstevens/az-storage-upload-web-app:ref:refs/heads/main
+2025-10-03T20:03:03.5947061Z  audience - api://AzureADTokenExchange
+2025-10-03T20:03:03.5947924Z  job_workflow_ref - bradcstevens/az-storage-upload-web-app/.github/workflows/ci-cd.yml@refs/heads/main
+2025-10-03T20:03:03.5948776Z Attempting Azure CLI login by using OIDC...
+2025-10-03T20:03:04.9948885Z Subscription is set successfully.
+2025-10-03T20:03:04.9949599Z Azure CLI login succeeds by using OIDC.

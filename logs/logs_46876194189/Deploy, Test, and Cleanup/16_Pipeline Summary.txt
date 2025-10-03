@@ -1,0 +1,49 @@
+﻿2025-10-03T20:32:26.2547790Z ##[group]Run echo "## 🎯 CI/CD Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+2025-10-03T20:32:26.2548314Z [36;1mecho "## 🎯 CI/CD Pipeline Summary" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2548685Z [36;1mecho "" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2549037Z [36;1mecho "**Environment**: \`ci-test-2\`" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2549433Z [36;1mecho "**Location**: \`westus3\`" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2549760Z [36;1mecho "" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2550006Z [36;1m[0m
+2025-10-03T20:32:26.2550217Z [36;1mif [ "success" == "success" ]; then[0m
+2025-10-03T20:32:26.2550559Z [36;1m  echo "✅ **Deployment**: Success" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2551092Z [36;1m  echo "- App URL: https://app-ahnm45ogpsuuo.azurewebsites.net" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2551594Z [36;1m  echo "- Storage: stahnm45ogpsuuo" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2552000Z [36;1m  echo "- Resource Group: rg-ci-test-2" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2552350Z [36;1melse[0m
+2025-10-03T20:32:26.2552615Z [36;1m  echo "❌ **Deployment**: Failed" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2553131Z [36;1mfi[0m
+2025-10-03T20:32:26.2553322Z [36;1m[0m
+2025-10-03T20:32:26.2553533Z [36;1mecho "" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2553795Z [36;1m[0m
+2025-10-03T20:32:26.2553997Z [36;1mif [ "failure" == "success" ]; then[0m
+2025-10-03T20:32:26.2554326Z [36;1m  echo "✅ **Tests**: Passed" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2554621Z [36;1melse[0m
+2025-10-03T20:32:26.2554860Z [36;1m  echo "❌ **Tests**: Failed" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2555148Z [36;1mfi[0m
+2025-10-03T20:32:26.2555333Z [36;1m[0m
+2025-10-03T20:32:26.2555530Z [36;1mecho "" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2556321Z [36;1mecho "✅ **Cleanup**: Completed (resources deleted)" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2556686Z [36;1m[0m
+2025-10-03T20:32:26.2556887Z [36;1m# Overall status[0m
+2025-10-03T20:32:26.2557189Z [36;1mif [ "success" == "success" ] && [ "failure" == "success" ]; then[0m
+2025-10-03T20:32:26.2557537Z [36;1m  echo "" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2557887Z [36;1m  echo "🎉 **Pipeline Status**: SUCCESS" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2558211Z [36;1m  exit 0[0m
+2025-10-03T20:32:26.2558411Z [36;1melse[0m
+2025-10-03T20:32:26.2558619Z [36;1m  echo "" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2558947Z [36;1m  echo "⚠️ **Pipeline Status**: FAILED" >> $GITHUB_STEP_SUMMARY[0m
+2025-10-03T20:32:26.2559266Z [36;1m  exit 1[0m
+2025-10-03T20:32:26.2559455Z [36;1mfi[0m
+2025-10-03T20:32:26.2591498Z shell: /usr/bin/bash -e {0}
+2025-10-03T20:32:26.2591772Z env:
+2025-10-03T20:32:26.2591974Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T20:32:26.2592201Z   AZURE_LOCATION: westus3
+2025-10-03T20:32:26.2592494Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:32:26.2592913Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib/pkgconfig
+2025-10-03T20:32:26.2593330Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:32:26.2593690Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:32:26.2594048Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:32:26.2594419Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib
+2025-10-03T20:32:26.2594726Z ##[endgroup]
+2025-10-03T20:32:26.2654075Z ##[error]Process completed with exit code 1.

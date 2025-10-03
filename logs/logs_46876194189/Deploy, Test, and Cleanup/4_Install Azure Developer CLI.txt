@@ -1,0 +1,24 @@
+﻿2025-10-03T19:59:02.1451363Z ##[group]Run curl -fsSL https://aka.ms/install-azd.sh | bash
+2025-10-03T19:59:02.1452025Z [36;1mcurl -fsSL https://aka.ms/install-azd.sh | bash[0m
+2025-10-03T19:59:02.1452430Z [36;1mazd version[0m
+2025-10-03T19:59:02.1492008Z shell: /usr/bin/bash -e {0}
+2025-10-03T19:59:02.1492290Z env:
+2025-10-03T19:59:02.1492492Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T19:59:02.1492755Z   AZURE_LOCATION: westus3
+2025-10-03T19:59:02.1493059Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T19:59:02.1493505Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib/pkgconfig
+2025-10-03T19:59:02.1493934Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T19:59:02.1494331Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T19:59:02.1494703Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T19:59:02.1495067Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib
+2025-10-03T19:59:02.1495404Z ##[endgroup]
+2025-10-03T19:59:04.2656057Z azd-linux-amd64
+2025-10-03T19:59:04.5629898Z NOTICE.txt
+2025-10-03T19:59:04.5848302Z install-azd: Successfully installed to /opt/microsoft/azd
+2025-10-03T19:59:04.5849369Z install-azd: Symlink created at /usr/local/bin/azd and pointing to /opt/microsoft/azd/azd-linux-amd64
+2025-10-03T19:59:04.5850119Z install-azd: 
+2025-10-03T19:59:04.5852306Z install-azd: The Azure Developer CLI collects usage data and sends that usage data to Microsoft in order to help us improve your experience.
+2025-10-03T19:59:04.5853890Z install-azd: You can opt-out of telemetry by setting the AZURE_DEV_COLLECT_TELEMETRY environment variable to 'no' in the shell you use.
+2025-10-03T19:59:04.5854896Z install-azd: 
+2025-10-03T19:59:04.5855525Z install-azd: Read more about Azure Developer CLI telemetry: https://github.com/Azure/azure-dev#data-collection
+2025-10-03T19:59:04.6186670Z azd version 1.19.0 (commit b3d68cea969b2bfbaa7b7fa289424428edb93e97)

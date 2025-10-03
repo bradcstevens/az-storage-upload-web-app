@@ -2,8 +2,8 @@
 description: "This instruction provides comprehensive best practices for developing Flask applications, covering code structure, security, performance, and testing."
 applyTo: "*.py"
 ---
-x
-- ## Code Organization and Structure:
+
+## Code Organization and Structure:
   - **Directory Structure Best Practices:**
     - Follow a modular and organized project structure. A common structure is:
 

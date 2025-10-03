@@ -1,0 +1,41 @@
+﻿2025-10-03T20:32:14.0099673Z ##[group]Run echo "🔍 Verifying all resources are deleted..."
+2025-10-03T20:32:14.0100728Z [36;1mecho "🔍 Verifying all resources are deleted..."[0m
+2025-10-03T20:32:14.0101262Z [36;1m[0m
+2025-10-03T20:32:14.0101594Z [36;1mRG_NAME="rg-ci-test-2"[0m
+2025-10-03T20:32:14.0102007Z [36;1m[0m
+2025-10-03T20:32:14.0102348Z [36;1mif [ -n "$RG_NAME" ]; then[0m
+2025-10-03T20:32:14.0102858Z [36;1m  # Wait a bit for deletion to propagate[0m
+2025-10-03T20:32:14.0103358Z [36;1m  sleep 10[0m
+2025-10-03T20:32:14.0103723Z [36;1m  [0m
+2025-10-03T20:32:14.0104110Z [36;1m  # Check if resource group still exists[0m
+2025-10-03T20:32:14.0104709Z [36;1m  if az group show --name "$RG_NAME" > /dev/null 2>&1; then[0m
+2025-10-03T20:32:14.0105436Z [36;1m    echo "⚠️ Resource group still exists (deletion in progress)"[0m
+2025-10-03T20:32:14.0106335Z [36;1m    echo "Status: Being deleted (async operation)"[0m
+2025-10-03T20:32:14.0106855Z [36;1m  else[0m
+2025-10-03T20:32:14.0107278Z [36;1m    echo "✅ Resource group confirmed deleted"[0m
+2025-10-03T20:32:14.0107817Z [36;1m  fi[0m
+2025-10-03T20:32:14.0108144Z [36;1mfi[0m
+2025-10-03T20:32:14.0108460Z [36;1m[0m
+2025-10-03T20:32:14.0108885Z [36;1m# List any remaining resources from this environment[0m
+2025-10-03T20:32:14.0109829Z [36;1mREMAINING=$(az resource list --tag "azd-env-name=ci-test-2" --query "length(@)" -o tsv 2>/dev/null || echo "0")[0m
+2025-10-03T20:32:14.0110678Z [36;1m[0m
+2025-10-03T20:32:14.0111020Z [36;1mif [ "$REMAINING" -gt 0 ]; then[0m
+2025-10-03T20:32:14.0111734Z [36;1m  echo "⚠️ Warning: Found $REMAINING resources still tagged with environment name"[0m
+2025-10-03T20:32:14.0112598Z [36;1m  az resource list --tag "azd-env-name=ci-test-2" --output table[0m
+2025-10-03T20:32:14.0113188Z [36;1melse[0m
+2025-10-03T20:32:14.0113572Z [36;1m  echo "✅ No tagged resources remaining"[0m
+2025-10-03T20:32:14.0114042Z [36;1mfi[0m
+2025-10-03T20:32:14.0156383Z shell: /usr/bin/bash -e {0}
+2025-10-03T20:32:14.0156650Z env:
+2025-10-03T20:32:14.0156863Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T20:32:14.0157113Z   AZURE_LOCATION: westus3
+2025-10-03T20:32:14.0157415Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:32:14.0157840Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib/pkgconfig
+2025-10-03T20:32:14.0158273Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:32:14.0158643Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:32:14.0159007Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:32:14.0159372Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib
+2025-10-03T20:32:14.0159678Z ##[endgroup]
+2025-10-03T20:32:14.0218408Z 🔍 Verifying all resources are deleted...
+2025-10-03T20:32:25.2273342Z ✅ Resource group confirmed deleted
+2025-10-03T20:32:26.2519533Z ✅ No tagged resources remaining

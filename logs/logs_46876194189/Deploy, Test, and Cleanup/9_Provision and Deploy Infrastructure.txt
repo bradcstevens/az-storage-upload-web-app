@@ -1,0 +1,131 @@
+﻿2025-10-03T20:03:05.6868002Z ##[group]Run echo "Starting deployment..."
+2025-10-03T20:03:05.6868600Z [36;1mecho "Starting deployment..."[0m
+2025-10-03T20:03:05.6869058Z [36;1mazd up --no-prompt[0m
+2025-10-03T20:03:05.6869442Z [36;1m[0m
+2025-10-03T20:03:05.6869762Z [36;1m# Capture outputs[0m
+2025-10-03T20:03:05.6870379Z [36;1mAPP_URL=$(azd env get-values | grep AZURE_APP_SERVICE_URL | cut -d'=' -f2 | tr -d '"')[0m
+2025-10-03T20:03:05.6871388Z [36;1mSTORAGE_ACCOUNT=$(azd env get-values | grep AZURE_STORAGE_ACCOUNT_NAME | cut -d'=' -f2 | tr -d '"')[0m
+2025-10-03T20:03:05.6872436Z [36;1mRESOURCE_GROUP=$(azd env get-values | grep AZURE_RESOURCE_GROUP | cut -d'=' -f2 | tr -d '"')[0m
+2025-10-03T20:03:05.6873140Z [36;1m[0m
+2025-10-03T20:03:05.6873525Z [36;1mecho "app_url=$APP_URL" >> $GITHUB_OUTPUT[0m
+2025-10-03T20:03:05.6874145Z [36;1mecho "storage_account=$STORAGE_ACCOUNT" >> $GITHUB_OUTPUT[0m
+2025-10-03T20:03:05.6874811Z [36;1mecho "resource_group=$RESOURCE_GROUP" >> $GITHUB_OUTPUT[0m
+2025-10-03T20:03:05.6875351Z [36;1m[0m
+2025-10-03T20:03:05.6875903Z [36;1mecho "✅ Deployment complete!"[0m
+2025-10-03T20:03:05.6876371Z [36;1mecho "🌐 App URL: $APP_URL"[0m
+2025-10-03T20:03:05.6876849Z [36;1mecho "📦 Storage: $STORAGE_ACCOUNT"[0m
+2025-10-03T20:03:05.6877395Z [36;1mecho "📂 Resource Group: $RESOURCE_GROUP"[0m
+2025-10-03T20:03:05.6925037Z shell: /usr/bin/bash -e {0}
+2025-10-03T20:03:05.6925456Z env:
+2025-10-03T20:03:05.6925966Z   AZURE_ENV_NAME: ci-test-2
+2025-10-03T20:03:05.6926677Z   AZURE_LOCATION: westus3
+2025-10-03T20:03:05.6927196Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.6927944Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib/pkgconfig
+2025-10-03T20:03:05.6928685Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.6929346Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.6930005Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.13/x64
+2025-10-03T20:03:05.6930665Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.13/x64/lib
+2025-10-03T20:03:05.6931237Z ##[endgroup]
+2025-10-03T20:03:05.7000466Z Starting deployment...
+2025-10-03T20:03:06.3582675Z Downloading Bicep
+2025-10-03T20:03:07.4715592Z   (✓) Done: Downloading Bicep
+2025-10-03T20:03:07.8160784Z Initialize bicep provider
+2025-10-03T20:03:12.7433730Z 
+2025-10-03T20:03:12.7434357Z Packaging services (azd package)
+2025-10-03T20:03:12.7434612Z 
+2025-10-03T20:03:12.7457794Z Packaging service web
+2025-10-03T20:03:12.7511433Z Packaging service web (Compressing deployment artifacts)
+2025-10-03T20:03:13.2570510Z   (✓) Done: Packaging service web
+2025-10-03T20:03:13.2571107Z   - Package Output: /tmp/video-upload-app-web-azddeploy-1759521792.zip
+2025-10-03T20:03:13.6098287Z 
+2025-10-03T20:03:13.6098810Z Provisioning Azure resources (azd provision)
+2025-10-03T20:03:13.6099412Z Provisioning Azure resources can take some time.
+2025-10-03T20:03:13.6099754Z 
+2025-10-03T20:03:13.6123007Z Initialize bicep provider
+2025-10-03T20:03:17.9764758Z Retrieving subscriptions...
+2025-10-03T20:03:18.2181007Z Reading subscription and location from environment...
+2025-10-03T20:03:18.9296790Z Subscription: Managed-Environment (***)
+2025-10-03T20:03:18.9297291Z Location: West US 3
+2025-10-03T20:03:18.9297525Z 
+2025-10-03T20:03:18.9297654Z Creating a deployment plan
+2025-10-03T20:03:18.9376197Z Comparing deployment state
+2025-10-03T20:03:22.1298262Z Creating/Updating resources
+2025-10-03T20:03:26.0204366Z   You can view detailed progress in the Azure Portal:
+2025-10-03T20:03:26.0205940Z   https://portal.azure.com/#view/HubsExtension/DeploymentDetailsBlade/~/overview/id/%2Fsubscriptions%2F***%2Fproviders%2FMicrosoft.Resources%2Fdeployments%2Fci-test-2-1759521798
+2025-10-03T20:03:26.0206732Z 
+2025-10-03T20:03:37.5965172Z   (✓) Done: Resource group: rg-ci-test-2 (2.034s)
+2025-10-03T20:03:48.8062726Z   (✓) Done: Virtual Network: vnet-ahnm45ogpsuuo (9.839s)
+2025-10-03T20:04:11.5771199Z   (✓) Done: Storage account: stahnm45ogpsuuo (23.972s)
+2025-10-03T20:04:45.6935552Z   (✓) Done: Private Endpoint: stahnm45ogpsuuo-pe (55.826s)
+2025-10-03T20:05:08.6332801Z   (✓) Done: App Service plan: plan-ahnm45ogpsuuo (9.199s)
+2025-10-03T20:05:41.7793855Z   (✓) Done: App Service: app-ahnm45ogpsuuo (39.574s)
+2025-10-03T20:05:57.8236003Z 
+2025-10-03T20:05:57.8236708Z Deploying services (azd deploy)
+2025-10-03T20:05:57.8237091Z 
+2025-10-03T20:05:57.8237259Z Deploying service web
+2025-10-03T20:05:58.8860128Z Deploying service web (Uploading deployment package)
+2025-10-03T20:12:52.3772462Z Deploying service web (Running build process)
+2025-10-03T20:12:57.1167108Z Deploying service web (Running build process)
+2025-10-03T20:13:01.3644371Z Deploying service web (Running build process)
+2025-10-03T20:13:05.8819781Z Deploying service web (Running build process)
+2025-10-03T20:13:09.9487134Z Deploying service web (Running build process)
+2025-10-03T20:13:13.5082153Z Deploying service web (Running build process)
+2025-10-03T20:13:17.6883490Z Deploying service web (Running build process)
+2025-10-03T20:13:21.3807662Z Deploying service web (Running build process)
+2025-10-03T20:13:25.5248126Z Deploying service web (Running build process)
+2025-10-03T20:13:29.9156876Z Deploying service web (Running build process)
+2025-10-03T20:13:33.8392968Z Deploying service web (Running build process)
+2025-10-03T20:13:38.0240932Z Deploying service web (Running build process)
+2025-10-03T20:13:42.7364564Z Deploying service web (Running build process)
+2025-10-03T20:13:46.7131599Z Deploying service web (Running build process)
+2025-10-03T20:13:50.5220385Z Deploying service web (Running build process)
+2025-10-03T20:13:54.2333324Z Deploying service web (Running build process)
+2025-10-03T20:13:57.9950814Z Deploying service web (Running build process)
+2025-10-03T20:14:02.3350747Z Deploying service web (Running build process)
+2025-10-03T20:14:06.6906227Z Deploying service web (Running build process)
+2025-10-03T20:14:10.9315106Z Deploying service web (Running build process)
+2025-10-03T20:14:16.0369150Z Deploying service web (Running build process)
+2025-10-03T20:14:19.8859494Z Deploying service web (Running build process)
+2025-10-03T20:14:40.5905965Z Deploying service web (Running build process)
+2025-10-03T20:15:02.3118983Z Deploying service web (Running build process)
+2025-10-03T20:15:22.9961232Z Deploying service web (Running build process)
+2025-10-03T20:16:04.3522053Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:16:24.8477468Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:16:45.0446172Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:17:05.2918032Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:17:25.4909258Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:17:45.6921001Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:18:06.2699153Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:18:26.5599897Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:18:46.8968930Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:19:07.4844932Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:19:28.2105115Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:19:48.4937344Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:20:09.0700920Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:20:29.6229659Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:20:49.8195278Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:21:10.0752147Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:21:30.5387357Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:21:50.7524686Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:22:11.0868165Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:22:31.5241893Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:22:51.7065981Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:23:11.9080082Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:23:32.0955827Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:23:52.3034254Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:24:12.4980401Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:24:33.0165941Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:24:53.1960543Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:25:13.3771862Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:25:33.5689032Z Deploying service web (Starting runtime process, 1 in progress instances, 0 successful instances)
+2025-10-03T20:25:53.7564256Z Deploying service web (Deployment with tracking status failed to start within the allotted time.Resuming deployment without tracking status.)
+2025-10-03T20:27:03.2679545Z Deploying service web (Fetching endpoints for app service)
+2025-10-03T20:27:03.4869933Z   (✓) Done: Deploying service web
+2025-10-03T20:27:03.4870484Z   - Endpoint: https://app-ahnm45ogpsuuo.azurewebsites.net/
+2025-10-03T20:27:03.4870862Z 
+2025-10-03T20:27:03.4870869Z 
+2025-10-03T20:27:03.4871138Z SUCCESS: Your up workflow to provision and deploy to Azure completed in 23 minutes 50 seconds.
+2025-10-03T20:27:03.6097061Z ✅ Deployment complete!
+2025-10-03T20:27:03.6097817Z 🌐 App URL: https://app-ahnm45ogpsuuo.azurewebsites.net
+2025-10-03T20:27:03.6098444Z 📦 Storage: stahnm45ogpsuuo
+2025-10-03T20:27:03.6098894Z 📂 Resource Group: rg-ci-test-2
