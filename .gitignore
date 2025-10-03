@@ -66,3 +66,6 @@ package/
 
 # Azure Developer CLI
 .azd/
+
+# Local Logs
+logs/
